@@ -5,140 +5,188 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Flashcards — Idiomas</title>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:system-ui,sans-serif;background:#f5f5f0;color:#1a1a1a;min-height:100vh}
-  .app{max-width:680px;margin:0 auto;padding:1.5rem}
-  .screen{display:none}
-  .screen.active{display:block}
-  .metric{background:#fff;border:1px solid #e5e5e0;border-radius:10px;padding:1rem;text-align:center}
-  .metric-label{font-size:12px;color:#888;margin-bottom:4px}
-  .metric-val{font-size:22px;font-weight:500}
-  .deck-card{background:#fff;border:1px solid #e5e5e0;border-radius:12px;padding:1rem 1.25rem;cursor:pointer;transition:border-color 0.15s,box-shadow 0.15s}
-  .deck-card:hover{border-color:#aaa;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
-  .tag{display:inline-block;font-size:11px;padding:2px 9px;border-radius:8px;font-weight:500}
-  .tag-blue{background:#dbeafe;color:#1e3a8a}
-  .tag-teal{background:#d1fae5;color:#065f46}
-  .tag-purple{background:#ede9fe;color:#4c1d95}
-  .tag-amber{background:#fef3c7;color:#78350f}
-  .tag-pink{background:#fce7f3;color:#831843}
-  .tag-gray{background:#f3f4f6;color:#374151}
-  .flashcard{background:#fff;border:1px solid #e5e5e0;border-radius:14px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;padding:2rem;text-align:center;transition:border-color 0.15s;user-select:none}
-  .flashcard:hover{border-color:#aaa}
-  .prog-bar-bg{background:#e5e5e0;border-radius:99px;height:6px;overflow:hidden}
-  .prog-bar-fill{height:6px;border-radius:99px;background:#059669;transition:width 0.3s}
-  .btn-row{display:flex;gap:8px;margin-top:1rem}
-  .btn-easy{background:#d1fae5;color:#065f46;border:1px solid #6ee7b7;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:500;cursor:pointer;flex:1}
-  .btn-hard{background:#fee2e2;color:#7f1d1d;border:1px solid #fca5a5;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:500;cursor:pointer;flex:1}
-  .btn-ok{background:#ede9fe;color:#4c1d95;border:1px solid #c4b5fd;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:500;cursor:pointer;flex:1}
-  button{background:#fff;border:1px solid #d1d1cb;border-radius:8px;padding:8px 16px;font-size:13px;cursor:pointer;color:#1a1a1a;transition:background 0.1s}
-  button:hover{background:#f5f5f0}
-  input,textarea,select{width:100%;font-size:14px;padding:8px 10px;border:1px solid #d1d1cb;border-radius:8px;background:#fff;color:#1a1a1a;font-family:inherit}
-  input:focus,textarea:focus,select:focus{outline:2px solid #7c3aed;outline-offset:1px}
-  label{font-size:12px;color:#666;display:block;margin-bottom:4px}
-  .add-card-form{background:#fff;border:1px solid #e5e5e0;border-radius:12px;padding:1.25rem;margin-bottom:12px}
-  .card-item{background:#fff;border:1px solid #e5e5e0;border-radius:8px;padding:10px 14px;margin-bottom:6px;display:flex;align-items:center;gap:12px}
-  .section-h{font-size:16px;font-weight:500;color:#1a1a1a}
-  .muted{font-size:13px;color:#666}
-  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.25rem}
-  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-  .grid-decks{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:1.5rem}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,sans-serif;background:#f5f5f0;color:#1a1a1a;min-height:100vh}
+.app{max-width:680px;margin:0 auto;padding:1.5rem}
+.screen{display:none}.screen.active{display:block}
+.metric{background:#fff;border:1px solid #e5e5e0;border-radius:10px;padding:1rem;text-align:center}
+.metric-label{font-size:12px;color:#888;margin-bottom:4px}
+.metric-val{font-size:22px;font-weight:500}
+.deck-card{background:#fff;border:1px solid #e5e5e0;border-radius:12px;padding:1rem 1.25rem;cursor:pointer;transition:border-color 0.15s,box-shadow 0.15s}
+.deck-card:hover{border-color:#aaa;box-shadow:0 2px 6px rgba(0,0,0,0.06)}
+.tag{display:inline-block;font-size:11px;padding:2px 9px;border-radius:8px;font-weight:500}
+.tag-blue{background:#dbeafe;color:#1e3a8a}.tag-teal{background:#d1fae5;color:#065f46}
+.tag-purple{background:#ede9fe;color:#4c1d95}.tag-amber{background:#fef3c7;color:#78350f}
+.tag-pink{background:#fce7f3;color:#831843}.tag-gray{background:#f3f4f6;color:#374151}
+.flashcard{background:#fff;border:1px solid #e5e5e0;border-radius:14px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;padding:2rem;text-align:center;user-select:none;transition:border-color 0.15s}
+.flashcard:hover{border-color:#aaa}
+.prog-bar-bg{background:#e5e5e0;border-radius:99px;height:6px;overflow:hidden}
+.prog-bar-fill{height:6px;border-radius:99px;background:#059669;transition:width 0.3s}
+.btn-row{display:flex;gap:8px;margin-top:1rem}
+.btn-easy{background:#d1fae5;color:#065f46;border:1px solid #6ee7b7;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:500;cursor:pointer;flex:1}
+.btn-hard{background:#fee2e2;color:#7f1d1d;border:1px solid #fca5a5;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:500;cursor:pointer;flex:1}
+.btn-ok{background:#ede9fe;color:#4c1d95;border:1px solid #c4b5fd;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:500;cursor:pointer;flex:1}
+button{background:#fff;border:1px solid #d1d1cb;border-radius:8px;padding:8px 16px;font-size:13px;cursor:pointer;color:#1a1a1a;transition:background 0.1s}
+button:hover{background:#eee}
+button:disabled{opacity:0.5;cursor:not-allowed}
+input,select{width:100%;font-size:14px;padding:8px 10px;border:1px solid #d1d1cb;border-radius:8px;background:#fff;color:#1a1a1a;font-family:inherit}
+label{font-size:12px;color:#666;display:block;margin-bottom:4px}
+.section-h{font-size:16px;font-weight:500}
+.muted{font-size:13px;color:#666}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.25rem}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grid-decks{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:1.5rem}
+.ai-box{background:#faf5ff;border:1px solid #c4b5fd;border-radius:12px;padding:1.25rem;margin-bottom:12px}
+.ai-chip{display:inline-block;background:#ede9fe;color:#5b21b6;font-size:11px;padding:3px 9px;border-radius:99px;font-weight:500;margin:3px 2px 3px 0;cursor:pointer;border:1px solid #c4b5fd;transition:background 0.1s}
+.ai-chip:hover{background:#ddd6fe}
+.ai-chip.sel{background:#7c3aed;color:#fff;border-color:#7c3aed}
+.ai-btn{background:#7c3aed;color:#fff;border:none;border-radius:8px;padding:10px;font-size:13px;font-weight:500;cursor:pointer;width:100%;margin-top:10px}
+.ai-btn:hover{background:#6d28d9}
+.ai-btn:disabled{background:#a78bfa;cursor:not-allowed}
+.ai-preview-card{background:#fff;border:1px solid #e5e5e0;border-radius:8px;padding:8px 12px;margin-bottom:6px;display:flex;align-items:flex-start;gap:10px;font-size:13px}
+.ai-preview-card input[type=checkbox]{width:16px;height:16px;cursor:pointer;flex-shrink:0;margin-top:2px}
+.tab-row{display:flex;gap:6px;margin-bottom:12px}
+.tab-btn{flex:1;padding:8px;font-size:13px;border-radius:8px;border:1px solid #d1d1cb;background:#fff;cursor:pointer;color:#666}
+.tab-btn.sel{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+.tab-content{display:none}.tab-content.sel{display:block}
+.card-row{background:#fff;border:1px solid #e5e5e0;border-radius:8px;padding:10px 14px;margin-bottom:6px;display:flex;align-items:center;gap:12px}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.pulsing{animation:pulse 1.2s infinite}
 </style>
 </head>
 <body>
 <div class="app">
 
-<div id="screen-home" class="screen active">
+<div id="s-home" class="screen active">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem">
-    <div>
-      <p class="section-h">Os meus decks</p>
-      <p class="muted" id="home-subtitle">Seleciona um deck para estudar</p>
-    </div>
-    <button onclick="showScreen('screen-stats')">&#9650; Progresso</button>
+    <div><p class="section-h">Os meus decks</p><p class="muted" id="home-sub">Seleciona um deck para estudar</p></div>
+    <button onclick="go('s-stats')">&#9650; Progresso</button>
   </div>
   <div class="grid-decks" id="deck-list"></div>
-  <button onclick="showScreen('screen-new-deck')" style="width:100%;padding:10px">+ Novo deck</button>
+  <button onclick="go('s-newdeck')" style="width:100%;padding:10px">+ Novo deck</button>
 </div>
 
-<div id="screen-deck" class="screen">
+<div id="s-deck" class="screen">
   <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem">
-    <button onclick="showScreen('screen-home')">&larr;</button>
-    <div style="flex:1">
-      <p class="section-h" id="deck-title-display"></p>
-      <p class="muted" id="deck-lang-display"></p>
-    </div>
-    <button onclick="startStudy()" id="study-btn" style="background:#d1fae5;color:#065f46;border-color:#6ee7b7">&#9654; Estudar</button>
+    <button onclick="go('s-home')">&larr;</button>
+    <div style="flex:1"><p class="section-h" id="dk-name"></p><p class="muted" id="dk-lang"></p></div>
+    <button onclick="startStudy()" style="background:#d1fae5;color:#065f46;border-color:#6ee7b7">&#9654; Estudar</button>
   </div>
   <div class="grid-3">
-    <div class="metric"><div class="metric-label">cartões</div><div class="metric-val" id="d-total">0</div></div>
-    <div class="metric"><div class="metric-label">para hoje</div><div class="metric-val" id="d-due" style="color:#d97706">0</div></div>
-    <div class="metric"><div class="metric-label">dominados</div><div class="metric-val" id="d-mastered" style="color:#059669">0</div></div>
+    <div class="metric"><div class="metric-label">cartões</div><div class="metric-val" id="dk-total">0</div></div>
+    <div class="metric"><div class="metric-label">para hoje</div><div class="metric-val" id="dk-due" style="color:#d97706">0</div></div>
+    <div class="metric"><div class="metric-label">dominados</div><div class="metric-val" id="dk-mastered" style="color:#059669">0</div></div>
   </div>
-  <div id="cards-list" style="margin-bottom:1rem"></div>
-  <div class="add-card-form">
-    <p style="font-size:13px;font-weight:500;color:#666;margin-bottom:10px">Adicionar cartão</p>
-    <div class="grid-2" style="margin-bottom:8px">
-      <div><label>Frente</label><input type="text" id="new-front" placeholder="Palavra ou frase"></div>
-      <div><label>Verso</label><input type="text" id="new-back" placeholder="Tradução"></div>
+  <div class="tab-row">
+    <button class="tab-btn sel" onclick="tab('t-ai',this)">&#10024; Gerar com IA</button>
+    <button class="tab-btn" onclick="tab('t-manual',this)">+ Manual</button>
+    <button class="tab-btn" onclick="tab('t-list',this);renderList()">&#9776; Cartões</button>
+  </div>
+
+  <div id="t-ai" class="tab-content sel">
+    <div class="ai-box">
+      <p style="font-size:13px;font-weight:500;color:#4c1d95;margin-bottom:10px">&#10024; Gerador de cartões com IA</p>
+      <label style="margin-bottom:6px">Escolhe um tema</label>
+      <div id="chips" style="margin-bottom:10px"></div>
+      <input type="text" id="ai-topic" placeholder="Ou escreve um tema personalizado...">
+      <div class="grid-2" style="margin-top:8px">
+        <div><label>Nível</label>
+          <select id="ai-lvl">
+            <option value="iniciante A1-A2">Iniciante (A1-A2)</option>
+            <option value="intermédio B1-B2" selected>Intermédio (B1-B2)</option>
+            <option value="avançado C1-C2">Avançado (C1-C2)</option>
+          </select>
+        </div>
+        <div><label>Quantidade</label>
+          <select id="ai-qty">
+            <option value="5">5 cartões</option>
+            <option value="10" selected>10 cartões</option>
+            <option value="15">15 cartões</option>
+            <option value="20">20 cartões</option>
+          </select>
+        </div>
+      </div>
+      <button class="ai-btn" id="ai-btn" onclick="generate()">&#10024; Gerar cartões</button>
     </div>
-    <input type="text" id="new-example" placeholder="Exemplo de uso (opcional)" style="margin-bottom:8px">
-    <button onclick="addCard()">+ Adicionar cartão</button>
+    <div id="ai-preview" style="display:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <p style="font-size:13px;font-weight:500;color:#4c1d95" id="preview-title"></p>
+        <div style="display:flex;gap:6px">
+          <button onclick="selAll(true)" style="font-size:11px;padding:3px 8px">Todos</button>
+          <button onclick="selAll(false)" style="font-size:11px;padding:3px 8px">Nenhum</button>
+        </div>
+      </div>
+      <div id="preview-cards"></div>
+      <button onclick="addSelected()" style="width:100%;padding:9px;background:#059669;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:500;margin-top:8px;cursor:pointer">+ Adicionar selecionados</button>
+    </div>
+  </div>
+
+  <div id="t-manual" class="tab-content">
+    <div style="background:#fff;border:1px solid #e5e5e0;border-radius:12px;padding:1.25rem">
+      <div class="grid-2" style="margin-bottom:8px">
+        <div><label>Frente</label><input type="text" id="mf" placeholder="Palavra / frase"></div>
+        <div><label>Verso</label><input type="text" id="mb" placeholder="Tradução"></div>
+      </div>
+      <input type="text" id="me" placeholder="Exemplo (opcional)" style="margin-bottom:8px">
+      <button onclick="addManual()">+ Adicionar</button>
+    </div>
+  </div>
+
+  <div id="t-list" class="tab-content">
+    <div id="cards-list"></div>
   </div>
 </div>
 
-<div id="screen-study" class="screen">
+<div id="s-study" class="screen">
   <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem">
     <button onclick="exitStudy()">&#10005;</button>
     <div style="flex:1">
       <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-        <span class="muted" id="study-progress-label">0 / 0</span>
-        <span class="muted" id="study-score-label">pontuação: 0</span>
+        <span class="muted" id="st-prog">0 / 0</span>
+        <span class="muted" id="st-score">pontuação: 0</span>
       </div>
-      <div class="prog-bar-bg"><div class="prog-bar-fill" id="study-prog-bar" style="width:0%"></div></div>
+      <div class="prog-bar-bg"><div class="prog-bar-fill" id="st-bar" style="width:0%"></div></div>
     </div>
   </div>
-
-  <div class="flashcard" id="flashcard" onclick="flipCard()">
-    <p style="font-size:11px;color:#aaa;margin-bottom:12px;letter-spacing:0.05em" id="card-side-label">FRENTE — clica para ver a resposta</p>
-    <p style="font-size:28px;font-weight:500" id="card-main-text"></p>
-    <p style="font-size:14px;color:#888;margin-top:10px;font-style:italic" id="card-example-text"></p>
+  <div class="flashcard" id="flashcard" onclick="flip()">
+    <p style="font-size:11px;color:#aaa;margin-bottom:12px;letter-spacing:0.05em" id="fc-side">FRENTE</p>
+    <p style="font-size:28px;font-weight:500" id="fc-main"></p>
+    <p style="font-size:14px;color:#888;margin-top:10px;font-style:italic" id="fc-ex"></p>
   </div>
-
-  <div id="answer-buttons" style="display:none">
+  <div id="ans-btns" style="display:none">
     <div class="btn-row">
-      <button class="btn-hard" onclick="rateCard(1)">&#10007; Difícil</button>
-      <button class="btn-ok" onclick="rateCard(3)">&#8213; Ok</button>
-      <button class="btn-easy" onclick="rateCard(5)">&#10003; Fácil</button>
+      <button class="btn-hard" onclick="rate(1)">&#10007; Difícil</button>
+      <button class="btn-ok" onclick="rate(3)">&#8213; Ok</button>
+      <button class="btn-easy" onclick="rate(5)">&#10003; Fácil</button>
     </div>
   </div>
-  <div id="flip-hint" style="text-align:center;margin-top:1rem">
-    <p style="font-size:12px;color:#aaa">Clica no cartão para ver a resposta</p>
-  </div>
+  <p id="flip-hint" style="text-align:center;margin-top:1rem;font-size:12px;color:#aaa">Clica no cartão para ver a resposta</p>
 </div>
 
-<div id="screen-result" class="screen">
+<div id="s-result" class="screen">
   <div style="text-align:center;padding:2rem 0 1.5rem">
     <div style="font-size:48px">&#127942;</div>
     <p style="font-size:20px;font-weight:500;margin:12px 0 4px">Sessão concluída!</p>
-    <p class="muted" id="result-subtitle"></p>
+    <p class="muted" id="res-msg"></p>
   </div>
   <div class="grid-3" style="margin-bottom:1.5rem">
-    <div class="metric"><div class="metric-label">cartões vistos</div><div class="metric-val" id="r-seen">0</div></div>
+    <div class="metric"><div class="metric-label">vistos</div><div class="metric-val" id="r-seen">0</div></div>
     <div class="metric"><div class="metric-label">pontuação</div><div class="metric-val" id="r-score" style="color:#7c3aed">0</div></div>
     <div class="metric"><div class="metric-label">precisão</div><div class="metric-val" id="r-acc" style="color:#059669">0%</div></div>
   </div>
   <div style="display:flex;gap:8px">
     <button onclick="startStudy()" style="flex:1;padding:10px">&#9654; Estudar de novo</button>
-    <button onclick="exitStudy()" style="flex:1;padding:10px">&larr; Voltar ao deck</button>
+    <button onclick="exitStudy()" style="flex:1;padding:10px">&larr; Voltar</button>
   </div>
 </div>
 
-<div id="screen-new-deck" class="screen">
+<div id="s-newdeck" class="screen">
   <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem">
-    <button onclick="showScreen('screen-home')">&larr;</button>
+    <button onclick="go('s-home')">&larr;</button>
     <p class="section-h">Novo deck</p>
   </div>
   <div style="display:grid;gap:12px;max-width:400px">
-    <div><label>Nome do deck</label><input type="text" id="nd-name" placeholder="Ex: Inglês — Viagens"></div>
+    <div><label>Nome</label><input type="text" id="nd-name" placeholder="Ex: Inglês — Viagens"></div>
     <div><label>Idioma</label>
       <select id="nd-lang">
         <option>Inglês</option><option>Espanhol</option><option>Francês</option>
@@ -150,158 +198,273 @@
   </div>
 </div>
 
-<div id="screen-stats" class="screen">
+<div id="s-stats" class="screen">
   <div style="display:flex;align-items:center;gap:12px;margin-bottom:1.5rem">
-    <button onclick="showScreen('screen-home')">&larr;</button>
+    <button onclick="go('s-home')">&larr;</button>
     <p class="section-h">Progresso geral</p>
   </div>
   <div class="grid-3">
-    <div class="metric"><div class="metric-label">total cartões</div><div class="metric-val" id="s-total">0</div></div>
-    <div class="metric"><div class="metric-label">pontuação total</div><div class="metric-val" id="s-score" style="color:#7c3aed">0</div></div>
-    <div class="metric"><div class="metric-label">dominados</div><div class="metric-val" id="s-mastered" style="color:#059669">0</div></div>
+    <div class="metric"><div class="metric-label">total cartões</div><div class="metric-val" id="st-total">0</div></div>
+    <div class="metric"><div class="metric-label">pontuação total</div><div class="metric-val" id="st-pts" style="color:#7c3aed">0</div></div>
+    <div class="metric"><div class="metric-label">dominados</div><div class="metric-val" id="st-dom" style="color:#059669">0</div></div>
   </div>
-  <div id="stats-decks" style="display:grid;gap:10px;margin-top:1rem"></div>
+  <div id="stats-list" style="display:grid;gap:10px;margin-top:1rem"></div>
 </div>
 
 </div>
 <script>
-const LANG_COLORS={Inglês:'tag-blue',Espanhol:'tag-amber',Francês:'tag-teal',Alemão:'tag-purple',Italiano:'tag-pink',Japonês:'tag-pink',Mandarim:'tag-amber',Outro:'tag-gray'};
-let state=JSON.parse(localStorage.getItem('fc_state')||'null')||{totalScore:0,decks:[
-  {id:'d1',name:'Inglês — Básico',lang:'Inglês',totalScore:0,cards:[
-    {id:'c1',front:'hello',back:'olá',example:'Hello, how are you?',interval:1,ef:2.5,due:Date.now(),reps:0,score:0},
-    {id:'c2',front:'thank you',back:'obrigado/a',example:'Thank you very much!',interval:1,ef:2.5,due:Date.now(),reps:0,score:0},
-    {id:'c3',front:'goodbye',back:'adeus / tchau',example:'Goodbye, see you tomorrow!',interval:1,ef:2.5,due:Date.now(),reps:0,score:0},
-    {id:'c4',front:'water',back:'água',example:'Can I have some water?',interval:1,ef:2.5,due:Date.now(),reps:0,score:0},
-    {id:'c5',front:'beautiful',back:'bonito/a',example:'What a beautiful day!',interval:1,ef:2.5,due:Date.now(),reps:0,score:0}
+const COLORS={Inglês:'tag-blue',Espanhol:'tag-amber',Francês:'tag-teal',Alemão:'tag-purple',Italiano:'tag-pink',Japonês:'tag-pink',Mandarim:'tag-amber',Outro:'tag-gray'};
+const TOPICS={
+  Inglês:['Viagens','Comida','Trabalho','Saúde','Tecnologia','Desporto','Casa e família','Emoções','Compras','Phrasal verbs','Expressões idiomáticas','Animais','Clima e natureza','Verbos irregulares'],
+  Espanhol:['Viagens','Comida','Trabalho','Saúde','Família','Cultura hispânica','Verbos irregulares','Expressões coloquiais','Desporto','Natureza','Números e quantidades'],
+  Francês:['Viagens','Gastronomia','Trabalho','Cultura','Saúde','Família','Verbos comuns','Expressões do dia a dia','Moda','Arte'],
+  Alemão:['Viagens','Trabalho','Casa','Saúde','Família','Verbos separáveis','Expressões comuns','Comida','Desporto'],
+  Italiano:['Viagens','Gastronomia','Arte e cultura','Trabalho','Família','Expressões comuns','Moda','Música'],
+  Japonês:['Saudações','Números','Comida','Viagens','Família','Verbos básicos','Expressões do dia a dia','Cores','Dias da semana'],
+  Mandarim:['Saudações','Números','Comida','Família','Verbos básicos','Viagens','Cores','Tempo e clima'],
+  Outro:['Vocabulário geral','Frases úteis','Verbos comuns','Expressões do dia a dia','Negócios','Viagens']
+};
+
+let state = JSON.parse(localStorage.getItem('fc3') || 'null') || {pts:0,decks:[
+  {id:'d1',name:'Inglês — Básico',lang:'Inglês',pts:0,cards:[
+    {id:'c1',front:'hello',back:'olá',ex:'Hello, how are you?',iv:1,ef:2.5,due:Date.now(),rp:0},
+    {id:'c2',front:'thank you',back:'obrigado/a',ex:'Thank you very much!',iv:1,ef:2.5,due:Date.now(),rp:0},
+    {id:'c3',front:'goodbye',back:'adeus',ex:'Goodbye, see you tomorrow!',iv:1,ef:2.5,due:Date.now(),rp:0},
+    {id:'c4',front:'water',back:'água',ex:'Can I have some water?',iv:1,ef:2.5,due:Date.now(),rp:0},
+    {id:'c5',front:'beautiful',back:'bonito/a',ex:'What a beautiful day!',iv:1,ef:2.5,due:Date.now(),rp:0}
   ]},
-  {id:'d2',name:'Espanhol — Frases',lang:'Espanhol',totalScore:0,cards:[
-    {id:'c6',front:'¿Cómo estás?',back:'Como estás?',example:'',interval:1,ef:2.5,due:Date.now(),reps:0,score:0},
-    {id:'c7',front:'muchas gracias',back:'muito obrigado/a',example:'Muchas gracias por tu ayuda.',interval:1,ef:2.5,due:Date.now(),reps:0,score:0},
-    {id:'c8',front:'por favor',back:'por favor',example:'¿Me puedes ayudar, por favor?',interval:1,ef:2.5,due:Date.now(),reps:0,score:0}
+  {id:'d2',name:'Espanhol — Frases',lang:'Espanhol',pts:0,cards:[
+    {id:'c6',front:'¿Cómo estás?',back:'Como estás?',ex:'',iv:1,ef:2.5,due:Date.now(),rp:0},
+    {id:'c7',front:'muchas gracias',back:'muito obrigado/a',ex:'Muchas gracias por tu ayuda.',iv:1,ef:2.5,due:Date.now(),rp:0},
+    {id:'c8',front:'por favor',back:'por favor',ex:'¿Me puedes ayudar, por favor?',iv:1,ef:2.5,due:Date.now(),rp:0}
   ]}
 ]};
-let currentDeckId=null,studyQueue=[],studyIndex=0,cardFlipped=false,sessionScore=0,sessionSeen=0,sessionCorrect=0;
-function save(){try{localStorage.setItem('fc_state',JSON.stringify(state));}catch(e){}}
-function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');if(id==='screen-home')renderHome();if(id==='screen-stats')renderStats();}
-function getDeck(id){return state.decks.find(d=>d.id===id);}
-function getDueCount(deck){const now=Date.now();return deck.cards.filter(c=>c.due<=now).length;}
-function getMastered(deck){return deck.cards.filter(c=>c.interval>=21).length;}
-function renderHome(){
-  const list=document.getElementById('deck-list');list.innerHTML='';let totalDue=0;
-  state.decks.forEach(deck=>{
-    const due=getDueCount(deck);totalDue+=due;
-    const mastered=getMastered(deck);
-    const pct=deck.cards.length>0?Math.round(mastered/deck.cards.length*100):0;
-    const tc=LANG_COLORS[deck.lang]||'tag-blue';
-    const div=document.createElement('div');div.className='deck-card';
-    div.innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><span class="tag ${tc}">${deck.lang}</span>${due>0?`<span style="font-size:11px;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:99px">${due} para hoje</span>`:''}</div><p style="font-size:14px;font-weight:500;margin-bottom:4px">${deck.name}</p><p class="muted" style="margin-bottom:10px">${deck.cards.length} cartões · ${pct}% dominados</p><div class="prog-bar-bg"><div class="prog-bar-fill" style="width:${pct}%"></div></div>`;
-    div.onclick=()=>openDeck(deck.id);list.appendChild(div);
-  });
-  document.getElementById('home-subtitle').textContent=totalDue>0?`${totalDue} cartões para rever hoje`:'Tudo em dia!';
-}
-function openDeck(id){currentDeckId=id;renderDeckScreen();showScreen('screen-deck');const deck=getDeck(id);document.getElementById('deck-title-display').textContent=deck.name;document.getElementById('deck-lang-display').textContent=deck.lang;}
-function renderDeckScreen(){
-  const deck=getDeck(currentDeckId);
-  document.getElementById('d-total').textContent=deck.cards.length;
-  document.getElementById('d-due').textContent=getDueCount(deck);
-  document.getElementById('d-mastered').textContent=getMastered(deck);
-  const list=document.getElementById('cards-list');list.innerHTML='';
-  const now=Date.now();
-  deck.cards.forEach(card=>{
-    const isDue=card.due<=now;
-    const div=document.createElement('div');div.className='card-item';
-    div.innerHTML=`<div style="flex:1"><span style="font-size:14px;font-weight:500">${card.front}</span><span class="muted" style="margin-left:8px">→ ${card.back}</span></div><span style="font-size:11px;color:${isDue?'#d97706':'#059669'};margin-right:8px">${isDue?'para rever':'em dia'}</span><button onclick="deleteCard('${card.id}')" style="color:#dc2626;border-color:#fca5a5;padding:4px 8px">&#128465;</button>`;
-    list.appendChild(div);
-  });
-}
-function deleteCard(cardId){const deck=getDeck(currentDeckId);deck.cards=deck.cards.filter(c=>c.id!==cardId);save();renderDeckScreen();}
-function addCard(){
-  const front=document.getElementById('new-front').value.trim();
-  const back=document.getElementById('new-back').value.trim();
-  const example=document.getElementById('new-example').value.trim();
-  if(!front||!back)return;
-  getDeck(currentDeckId).cards.push({id:'c'+Date.now(),front,back,example,interval:1,ef:2.5,due:Date.now(),reps:0,score:0});
-  save();document.getElementById('new-front').value='';document.getElementById('new-back').value='';document.getElementById('new-example').value='';renderDeckScreen();
-}
-function startStudy(){
-  const deck=getDeck(currentDeckId);const now=Date.now();
-  studyQueue=deck.cards.filter(c=>c.due<=now).sort(()=>Math.random()-0.5);
-  if(studyQueue.length===0)studyQueue=[...deck.cards].sort((a,b)=>a.due-b.due).slice(0,10);
-  studyIndex=0;sessionScore=0;sessionSeen=0;sessionCorrect=0;
+
+let cur=null, queue=[], qi=0, flipped=false, ss=0, seen=0, correct=0, genCards=[], selChip=null;
+
+function save(){try{localStorage.setItem('fc3',JSON.stringify(state));}catch(e){}}
+function dk(id){return state.decks.find(d=>d.id===id);}
+function due(d){return d.cards.filter(c=>c.due<=Date.now()).length;}
+function mastered(d){return d.cards.filter(c=>c.iv>=21).length;}
+
+function go(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById('screen-study').classList.add('active');
+  document.getElementById(id).classList.add('active');
+  if(id==='s-home')renderHome();
+  if(id==='s-stats')renderStats();
+}
+
+function tab(id, btn){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('sel'));
+  document.getElementById(id).classList.add('sel');
+}
+
+function metrics(){
+  const d=dk(cur);
+  document.getElementById('dk-total').textContent=d.cards.length;
+  document.getElementById('dk-due').textContent=due(d);
+  document.getElementById('dk-mastered').textContent=mastered(d);
+}
+
+function renderHome(){
+  const el=document.getElementById('deck-list');el.innerHTML='';let td=0;
+  state.decks.forEach(d=>{
+    const du=due(d);td+=du;const m=mastered(d);
+    const pct=d.cards.length>0?Math.round(m/d.cards.length*100):0;
+    const tc=COLORS[d.lang]||'tag-blue';
+    const div=document.createElement('div');div.className='deck-card';
+    div.innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><span class="tag ${tc}">${d.lang}</span>${du>0?`<span style="font-size:11px;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:99px">${du} para hoje</span>`:''}</div><p style="font-size:14px;font-weight:500;margin-bottom:4px">${d.name}</p><p class="muted" style="margin-bottom:10px">${d.cards.length} cartões · ${pct}% dominados</p><div class="prog-bar-bg"><div class="prog-bar-fill" style="width:${pct}%"></div></div>`;
+    div.onclick=()=>openDeck(d.id);el.appendChild(div);
+  });
+  document.getElementById('home-sub').textContent=td>0?`${td} cartões para rever hoje`:'Tudo em dia!';
+}
+
+function openDeck(id){
+  cur=id;const d=dk(id);
+  document.getElementById('dk-name').textContent=d.name;
+  document.getElementById('dk-lang').textContent=d.lang;
+  metrics();renderChips(d.lang);
+  document.getElementById('ai-preview').style.display='none';genCards=[];selChip=null;
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('sel',i===0));
+  document.querySelectorAll('.tab-content').forEach((t,i)=>t.classList.toggle('sel',i===0));
+  go('s-deck');
+}
+
+function renderChips(lang){
+  const topics=TOPICS[lang]||TOPICS['Outro'];
+  const cont=document.getElementById('chips');cont.innerHTML='';selChip=null;
+  topics.forEach(t=>{
+    const s=document.createElement('span');s.className='ai-chip';s.textContent=t;
+    s.onclick=()=>{
+      document.querySelectorAll('.ai-chip').forEach(c=>c.classList.remove('sel'));
+      s.classList.add('sel');selChip=t;
+      document.getElementById('ai-topic').value='';
+    };
+    cont.appendChild(s);
+  });
+}
+
+function renderList(){
+  const d=dk(cur);const el=document.getElementById('cards-list');el.innerHTML='';
+  if(!d.cards.length){el.innerHTML='<p class="muted" style="text-align:center;padding:1.5rem">Nenhum cartão ainda. Gera com IA ou adiciona manualmente!</p>';return;}
+  d.cards.forEach(c=>{
+    const isDue=c.due<=Date.now();
+    const div=document.createElement('div');div.className='card-row';
+    div.innerHTML=`<div style="flex:1;min-width:0"><span style="font-size:14px;font-weight:500">${c.front}</span><span class="muted" style="margin-left:8px">→ ${c.back}</span>${c.ex?`<p style="font-size:11px;color:#aaa;margin-top:2px;font-style:italic">${c.ex}</p>`:''}</div><span style="font-size:11px;color:${isDue?'#d97706':'#059669'};margin-right:8px;flex-shrink:0">${isDue?'rever':'em dia'}</span><button onclick="delCard('${c.id}')" style="color:#dc2626;border-color:#fca5a5;padding:4px 8px;font-size:12px;flex-shrink:0">&#128465;</button>`;
+    el.appendChild(div);
+  });
+}
+
+function delCard(id){dk(cur).cards=dk(cur).cards.filter(c=>c.id!==id);save();renderList();metrics();}
+
+function addManual(){
+  const f=document.getElementById('mf').value.trim(),b=document.getElementById('mb').value.trim(),e=document.getElementById('me').value.trim();
+  if(!f||!b)return;
+  dk(cur).cards.push({id:'c'+Date.now(),front:f,back:b,ex:e,iv:1,ef:2.5,due:Date.now(),rp:0});
+  save();metrics();document.getElementById('mf').value='';document.getElementById('mb').value='';document.getElementById('me').value='';
+  alert('Cartão adicionado!');
+}
+
+async function generate(){
+  const d=dk(cur);
+  const topic=selChip||document.getElementById('ai-topic').value.trim();
+  if(!topic){alert('Escolhe ou escreve um tema!');return;}
+  const lvl=document.getElementById('ai-lvl').value;
+  const qty=document.getElementById('ai-qty').value;
+  const btn=document.getElementById('ai-btn');
+  btn.disabled=true;btn.textContent='A gerar...';btn.classList.add('pulsing');
+
+  const prompt=`Gera exatamente ${qty} flashcards para aprender ${d.lang}, em português europeu (PT-PT).
+Tema: "${topic}" | Nível: ${lvl}
+Formato obrigatório: JSON array, cada objeto tem exatamente estas chaves: "front" (palavra/frase em ${d.lang}), "back" (tradução em português PT), "example" (frase de exemplo curta em ${d.lang}, ou string vazia).
+Regras: variedade de vocabulário, sem repetições, exemplos naturais e úteis.
+Responde APENAS com o JSON array. Sem texto antes ou depois. Sem backticks. Sem markdown.`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1500,messages:[{role:'user',content:prompt}]})
+    });
+    const data=await res.json();
+    const raw=data.content.map(b=>b.text||'').join('').replace(/```json|```/g,'').trim();
+    genCards=JSON.parse(raw);
+    showPreview(topic);
+  }catch(e){alert('Erro ao gerar. Tenta novamente.');console.error(e);}
+
+  btn.disabled=false;btn.textContent='✨ Gerar cartões';btn.classList.remove('pulsing');
+}
+
+function showPreview(topic){
+  const pc=document.getElementById('preview-cards');pc.innerHTML='';
+  document.getElementById('preview-title').textContent=`${genCards.length} cartões gerados — "${topic}"`;
+  genCards.forEach((c,i)=>{
+    const div=document.createElement('div');div.className='ai-preview-card';
+    div.innerHTML=`<input type="checkbox" id="pc${i}" checked><div style="flex:1"><span style="font-weight:500">${c.front}</span><span style="color:#888;margin-left:6px">→ ${c.back}</span>${c.example?`<p style="font-size:11px;color:#aaa;margin-top:2px;font-style:italic">${c.example}</p>`:''}</div>`;
+    pc.appendChild(div);
+  });
+  document.getElementById('ai-preview').style.display='block';
+}
+
+function selAll(v){document.querySelectorAll('#preview-cards input[type=checkbox]').forEach(cb=>cb.checked=v);}
+
+function addSelected(){
+  const d=dk(cur);let n=0;
+  document.querySelectorAll('#preview-cards input[type=checkbox]').forEach((cb,i)=>{
+    if(cb.checked&&genCards[i]){
+      const c=genCards[i];
+      d.cards.push({id:'c'+Date.now()+i,front:c.front,back:c.back,ex:c.example||'',iv:1,ef:2.5,due:Date.now(),rp:0});
+      n++;
+    }
+  });
+  save();metrics();document.getElementById('ai-preview').style.display='none';genCards=[];
+  alert(`✓ ${n} cartões adicionados ao deck!`);
+}
+
+function startStudy(){
+  const d=dk(cur);
+  queue=d.cards.filter(c=>c.due<=Date.now()).sort(()=>Math.random()-0.5);
+  if(!queue.length)queue=[...d.cards].sort((a,b)=>a.due-b.due).slice(0,10);
+  qi=0;ss=0;seen=0;correct=0;
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s-study').classList.add('active');
   showCard();
 }
+
 function showCard(){
-  const card=studyQueue[studyIndex];cardFlipped=false;
-  document.getElementById('card-side-label').textContent='FRENTE — clica para ver a resposta';
-  document.getElementById('card-main-text').textContent=card.front;
-  document.getElementById('card-example-text').textContent='';
-  document.getElementById('answer-buttons').style.display='none';
+  const c=queue[qi];flipped=false;
+  document.getElementById('fc-side').textContent='FRENTE — clica para ver a resposta';
+  document.getElementById('fc-main').textContent=c.front;
+  document.getElementById('fc-ex').textContent='';
+  document.getElementById('ans-btns').style.display='none';
   document.getElementById('flip-hint').style.display='block';
-  const pct=Math.round(studyIndex/studyQueue.length*100);
-  document.getElementById('study-prog-bar').style.width=pct+'%';
-  document.getElementById('study-progress-label').textContent=`${studyIndex} / ${studyQueue.length}`;
-  document.getElementById('study-score-label').textContent=`pontuação: ${sessionScore}`;
+  document.getElementById('st-bar').style.width=Math.round(qi/queue.length*100)+'%';
+  document.getElementById('st-prog').textContent=`${qi} / ${queue.length}`;
+  document.getElementById('st-score').textContent=`pontuação: ${ss}`;
 }
-function flipCard(){
-  if(cardFlipped)return;cardFlipped=true;
-  const card=studyQueue[studyIndex];
-  document.getElementById('card-side-label').textContent='VERSO';
-  document.getElementById('card-main-text').textContent=card.back;
-  document.getElementById('card-example-text').textContent=card.example||'';
-  document.getElementById('answer-buttons').style.display='block';
+
+function flip(){
+  if(flipped)return;flipped=true;const c=queue[qi];
+  document.getElementById('fc-side').textContent='VERSO';
+  document.getElementById('fc-main').textContent=c.back;
+  document.getElementById('fc-ex').textContent=c.ex||'';
+  document.getElementById('ans-btns').style.display='block';
   document.getElementById('flip-hint').style.display='none';
 }
-function rateCard(quality){
-  const card=studyQueue[studyIndex];
-  const deck=getDeck(currentDeckId);
-  const dc=deck.cards.find(c=>c.id===card.id);
-  sessionSeen++;if(quality>=3)sessionCorrect++;
-  const pts=quality===5?10:quality===3?5:1;
-  sessionScore+=pts;state.totalScore+=pts;deck.totalScore=(deck.totalScore||0)+pts;
-  if(dc){dc.score=(dc.score||0)+pts;dc.reps=(dc.reps||0)+1;
-    if(quality>=3){
-      if(dc.reps===1)dc.interval=1;else if(dc.reps===2)dc.interval=6;else dc.interval=Math.round(dc.interval*dc.ef);
-      dc.ef=Math.max(1.3,dc.ef+0.1-(5-quality)*(0.08+(5-quality)*0.02));
-    }else{dc.reps=0;dc.interval=1;}
-    dc.due=Date.now()+dc.interval*86400000;
+
+function rate(q){
+  const c=queue[qi];const d=dk(cur);const dc=d.cards.find(x=>x.id===c.id);
+  seen++;if(q>=3)correct++;
+  const pts=q===5?10:q===3?5:1;ss+=pts;state.pts+=pts;d.pts=(d.pts||0)+pts;
+  if(dc){
+    dc.rp=(dc.rp||0)+1;
+    if(q>=3){
+      if(dc.rp===1)dc.iv=1;else if(dc.rp===2)dc.iv=6;else dc.iv=Math.round(dc.iv*dc.ef);
+      dc.ef=Math.max(1.3,dc.ef+0.1-(5-q)*(0.08+(5-q)*0.02));
+    }else{dc.rp=0;dc.iv=1;}
+    dc.due=Date.now()+dc.iv*86400000;
   }
-  save();studyIndex++;
-  if(studyIndex>=studyQueue.length)showResult();else showCard();
+  save();qi++;if(qi>=queue.length)showResult();else showCard();
 }
+
 function showResult(){
-  document.getElementById('r-seen').textContent=sessionSeen;
-  document.getElementById('r-score').textContent=sessionScore;
-  const acc=sessionSeen>0?Math.round(sessionCorrect/sessionSeen*100):0;
+  document.getElementById('r-seen').textContent=seen;
+  document.getElementById('r-score').textContent=ss;
+  const acc=seen>0?Math.round(correct/seen*100):0;
   document.getElementById('r-acc').textContent=acc+'%';
-  document.getElementById('result-subtitle').textContent=acc>=80?'Excelente trabalho!':acc>=50?'Boa sessão, continua assim!':'Continua a praticar — vai melhorar!';
+  document.getElementById('res-msg').textContent=acc>=80?'Excelente trabalho!':acc>=50?'Boa sessão, continua!':'Continua a praticar!';
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById('screen-result').classList.add('active');
+  document.getElementById('s-result').classList.add('active');
 }
-function exitStudy(){renderDeckScreen();showScreen('screen-deck');}
+
+function exitStudy(){metrics();go('s-deck');}
+
 function createDeck(){
-  const name=document.getElementById('nd-name').value.trim();const lang=document.getElementById('nd-lang').value;
-  if(!name)return;
-  state.decks.push({id:'d'+Date.now(),name,lang,totalScore:0,cards:[]});
-  save();document.getElementById('nd-name').value='';showScreen('screen-home');
+  const n=document.getElementById('nd-name').value.trim(),l=document.getElementById('nd-lang').value;
+  if(!n)return;
+  state.decks.push({id:'d'+Date.now(),name:n,lang:l,pts:0,cards:[]});
+  save();document.getElementById('nd-name').value='';go('s-home');
 }
+
 function renderStats(){
-  let total=0,mastered=0;
-  state.decks.forEach(d=>{total+=d.cards.length;mastered+=getMastered(d);});
-  document.getElementById('s-total').textContent=total;
-  document.getElementById('s-score').textContent=state.totalScore||0;
-  document.getElementById('s-mastered').textContent=mastered;
-  const cont=document.getElementById('stats-decks');cont.innerHTML='';
-  state.decks.forEach(deck=>{
-    const m=getMastered(deck);const pct=deck.cards.length>0?Math.round(m/deck.cards.length*100):0;
-    const tc=LANG_COLORS[deck.lang]||'tag-blue';
+  let tot=0,dom=0;
+  state.decks.forEach(d=>{tot+=d.cards.length;dom+=mastered(d);});
+  document.getElementById('st-total').textContent=tot;
+  document.getElementById('st-pts').textContent=state.pts||0;
+  document.getElementById('st-dom').textContent=dom;
+  const el=document.getElementById('stats-list');el.innerHTML='';
+  state.decks.forEach(d=>{
+    const m=mastered(d);const pct=d.cards.length>0?Math.round(m/d.cards.length*100):0;
+    const tc=COLORS[d.lang]||'tag-blue';
     const div=document.createElement('div');
     div.style.cssText='background:#fff;border:1px solid #e5e5e0;border-radius:12px;padding:1rem 1.25rem';
-    div.innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="display:flex;align-items:center;gap:8px"><span class="tag ${tc}">${deck.lang}</span><span style="font-size:14px;font-weight:500">${deck.name}</span></div><span class="muted">${pct}% dominado</span></div><div style="display:flex;gap:16px;font-size:12px;color:#888;margin-bottom:8px"><span>${deck.cards.length} cartões</span><span>${getDueCount(deck)} para hoje</span><span>${deck.totalScore||0} pts</span></div><div class="prog-bar-bg"><div class="prog-bar-fill" style="width:${pct}%"></div></div>`;
-    cont.appendChild(div);
+    div.innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="display:flex;align-items:center;gap:8px"><span class="tag ${tc}">${d.lang}</span><span style="font-size:14px;font-weight:500">${d.name}</span></div><span class="muted">${pct}% dominado</span></div><div style="display:flex;gap:16px;font-size:12px;color:#888;margin-bottom:8px"><span>${d.cards.length} cartões</span><span>${due(d)} para hoje</span><span>${d.pts||0} pts</span></div><div class="prog-bar-bg"><div class="prog-bar-fill" style="width:${pct}%"></div></div>`;
+    el.appendChild(div);
   });
 }
+
 renderHome();
 </script>
 </body>
